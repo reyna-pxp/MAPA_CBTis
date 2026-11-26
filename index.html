@@ -1,0 +1,1622 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Mapa CBTis 126</title>
+<style>
+:root{
+  --bg:#ffffff;
+  --card:#ffffff;
+  --tx:#171c26;
+  --mu:#5b667a;
+  --ln:#cbd5e1;
+  --ac:#2563eb;
+  --ac2:#7c3aed;
+  --cy:#0891b2;
+  --rd:#e11d48;
+  --bd:#7f1d1d;
+  --sh:0 6px 20px rgba(15,23,42,.06);
+  color-scheme:light dark;
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#ffffff;
+    --card:#ffffff;
+    --tx:#171c26;
+    --mu:#475569;
+    --ln:#94a3b8;
+    --ac:#2563eb;
+    --ac2:#7c3aed;
+    --cy:#0891b2;
+    --rd:#e11d48;
+    --bd:#991b1b;
+    --sh:0 6px 20px rgba(15,23,42,.08);
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--tx);
+  font:15.5px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.welcome{
+  min-height:100dvh;
+  display:grid;
+  place-items:center;
+  padding:20px 14px;
+  background:var(--bg);
+  transition:opacity .28s ease,transform .28s ease;
+}
+.welcome.leaving{
+  opacity:0;
+  transform:translateY(-8px);
+}
+.welcome-card{
+  width:100%;
+  max-width:460px;
+  background:var(--card);
+  border:1px solid var(--ln);
+  border-radius:20px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:var(--sh);
+}
+.welcome-logo{
+  width:116px;height:116px;margin:0 auto 16px;
+  padding:8px;
+  border-radius:22px;background:#ffffff;border:1.5px solid var(--ln);
+  display:grid;place-items:center;overflow:hidden;
+  box-shadow:0 4px 14px rgba(15,23,42,.06);
+}
+.welcome-logo img{width:100%;height:100%;object-fit:contain;display:block}
+.welcome-tag{
+  display:inline-block;font-size:12px;font-weight:700;
+  color:var(--bd);background:rgba(127,29,29,.09);
+  border:1px solid rgba(127,29,29,.22);padding:4px 11px;border-radius:999px;
+  margin-bottom:8px;
+}
+.welcome-card h2{margin:4px 0 8px;font-size:23px;font-weight:800;letter-spacing:-.02em}
+.welcome-card p{margin:0 auto 22px;max-width:36ch;color:var(--mu);font-size:14.5px}
+.enter-btn{
+  width:100%;padding:13px 18px;border-radius:13px;border:0;
+  background:linear-gradient(135deg,var(--bd),#991b1b);
+  color:#ffffff;font:inherit;font-weight:700;font-size:15.5px;cursor:pointer;
+  transition:transform .12s,opacity .18s;
+}
+.enter-btn:hover{opacity:.95}
+.enter-btn:active{transform:scale(.99)}
+.wrap{
+  max-width:760px;margin:auto;padding:14px 12px 24px;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .35s ease,transform .35s ease;
+}
+.wrap.show{opacity:1;transform:translateY(0)}
+.hidden{display:none!important}
+header{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  margin-bottom:14px;padding:12px 16px;
+  background:var(--card);border:1px solid var(--ln);border-radius:16px;box-shadow:var(--sh);
+}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo-box{
+  width:46px;height:46px;border-radius:12px;
+  background:#ffffff;border:1px solid var(--ln);padding:4px;
+  display:grid;place-items:center;flex-shrink:0;overflow:hidden;
+}
+.logo-box img{width:100%;height:100%;object-fit:contain;display:block}
+h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em}
+.sub{font-size:12.5px;color:var(--mu);margin-top:2px}
+.hdr-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mini-btn{
+  width:auto;padding:6px 11px;font-size:12.5px;border-radius:999px;
+  background:var(--bg);color:var(--tx);border:1px solid var(--ln);
+}
+.mini-btn:hover{border-color:var(--ac);color:var(--ac)}
+.badge{
+  font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:999px;
+  background:rgba(124,58,237,.14);
+  color:var(--ac2);border:1px solid rgba(124,58,237,.3);
+  white-space:nowrap;
+}
+.help-card{
+  margin-bottom:12px;background:var(--card);border:1px solid var(--ln);
+  border-radius:16px;padding:13px 16px;box-shadow:var(--sh);font-size:13.5px;color:var(--mu);
+}
+.help-card b{color:var(--tx);display:block;margin-bottom:6px;font-size:14.5px}
+.help-card ul{margin:0;padding-left:18px;display:grid;gap:4px}
+small{color:var(--mu)}
+#st{display:block;margin-top:8px;text-align:center;min-height:20px;font-size:13px}
+.panel{
+  background:var(--card);border:1px solid var(--ln);border-radius:16px;
+  padding:14px;display:grid;gap:10px;box-shadow:var(--sh);
+}
+.filter-bar{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.search-in{
+  font:inherit;color:var(--tx);background:var(--bg);
+  border:1px solid var(--ln);border-radius:11px;padding:9px 12px;
+  width:100%;min-width:0;transition:border-color .18s;
+}
+.search-in:focus{outline:3px solid var(--ac);outline-offset:1px;border-color:var(--ac)}
+.results-box{
+  border:1px solid var(--ln);border-radius:12px;background:#f8fafc;
+  padding:8px;display:grid;gap:6px;max-height:210px;overflow-y:auto;
+}
+.results-top{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:0 4px 2px;font-size:12px;color:var(--mu);font-weight:600;
+}
+.hide-res-btn{
+  width:auto;padding:2px 8px;font-size:11.5px;border-radius:999px;
+  background:#ffffff;color:var(--mu);border:1px solid var(--ln);
+}
+.result-item{
+  width:100%;text-align:left;padding:9px 11px;border-radius:10px;
+  background:#ffffff;border:1px solid var(--ln);color:var(--tx);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.result-item:hover{border-color:var(--ac2);background:#faf5ff}
+.result-item.active{border-color:var(--ac2);background:rgba(124,58,237,.1)}
+.result-main{display:grid;gap:1px;min-width:0}
+.result-name{font-weight:700;font-size:14px;color:var(--tx)}
+.result-sub{font-size:12px;color:var(--mu)}
+.result-tag{
+  font-size:11px;font-weight:700;color:var(--bd);
+  background:rgba(127,29,29,.09);padding:3px 8px;border-radius:999px;white-space:nowrap;
+}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  width:auto;padding:5px 10px;font-size:12px;border-radius:999px;
+  background:var(--bg);color:var(--mu);border:1px solid var(--ln);font-weight:600;
+}
+.chip.active{
+  background:rgba(127,29,29,.12);color:var(--bd);border-color:rgba(127,29,29,.35);
+}
+.quick-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.quick-lbl{font-size:11.5px;font-weight:700;color:var(--mu);margin-right:2px}
+.q-btn{
+  width:auto;padding:4px 9px;font-size:11.5px;border-radius:999px;
+  background:#f8fafc;color:var(--tx);border:1px solid var(--ln);font-weight:600;
+}
+.q-btn:hover{border-color:var(--ac);color:var(--ac);background:#eff6ff}
+.q-btn.active{background:rgba(37,99,235,.12);border-color:rgba(37,99,235,.35);color:var(--ac)}
+.row{display:flex;gap:10px;align-items:center}
+.dot-tag{width:22px;text-align:center;font-weight:700;font-size:14px;color:var(--ac);flex-shrink:0}
+select,button{
+  font:inherit;color:var(--tx);background:var(--bg);
+  border:1px solid var(--ln);border-radius:11px;padding:10px 12px;
+  width:100%;min-width:0;transition:border-color .18s,background .18s,color .18s,transform .12s;
+}
+select:hover,button:hover{border-color:var(--ac)}
+button{cursor:pointer;font-weight:600}
+button:active{transform:scale(.99)}
+button:focus-visible,select:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+button.sw{width:auto;padding:10px 14px;font-size:16px}
+button.on{
+  background:linear-gradient(135deg,var(--ac),var(--ac2));
+  color:#fff;border-color:transparent;
+}
+.btns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.map{
+  margin-top:12px;background:var(--card);border:1px solid var(--ln);
+  border-radius:16px;overflow:hidden;box-shadow:var(--sh);
+}
+svg{display:block;width:100%;height:auto}
+.b{fill:var(--bd);stroke:#450a0a;stroke-width:.9;cursor:pointer;transition:fill .18s,fill-opacity .18s,stroke .18s}
+.b:hover{fill:#991b1b;fill-opacity:.88}
+.b.orig{fill:#1d4ed8;fill-opacity:.9;stroke:#1e3a8a;stroke-width:1.4}
+.b.sel{fill:var(--ac2);fill-opacity:.38;stroke:var(--ac2);stroke-width:1.4}
+.b.orig.sel{fill:var(--ac2);fill-opacity:.5;stroke:var(--ac2);stroke-width:1.6}
+.halo-ring{
+  fill:none;stroke:var(--ac2);stroke-width:2.2;pointer-events:none;
+  transform-box:fill-box;transform-origin:center;
+  animation:haloPulse 1.6s ease-out infinite;
+}
+@keyframes haloPulse{
+  0%{transform:scale(.96);opacity:.95}
+  100%{transform:scale(1.12);opacity:0}
+}
+.lbl{font-size:6.2px;font-weight:600;fill:#ffffff;text-anchor:middle;pointer-events:none}
+.b.sel + .lbl{fill:var(--tx)}
+.dir-lbl{font-size:7px;font-weight:800;fill:#64748b;text-anchor:middle;pointer-events:none;letter-spacing:.05em}
+.compass-ring{fill:#ffffff;fill-opacity:.92;stroke:#cbd5e1;stroke-width:1}
+.compass-needle-n{fill:var(--rd)}
+.compass-needle-s{fill:#94a3b8}
+.road{stroke:var(--ln);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none;opacity:.95}
+.route{
+  stroke:var(--ac);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;
+  fill:none;stroke-dasharray:7 5;animation:dash .75s linear infinite;
+}
+@keyframes dash{to{stroke-dashoffset:-24}}
+.meta-row{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:10px;padding:0 4px;
+}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mu)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.lg-dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.lg-line{width:16px;height:0;border-top:3px dashed var(--ac);display:inline-block}
+.info{
+  margin-top:10px;background:var(--card);border:1px solid var(--ln);
+  border-radius:16px;padding:14px 16px;min-height:68px;box-shadow:var(--sh);
+}
+.info b{display:block;margin-bottom:3px;font-size:16px;color:var(--tx)}
+.voice-tip{margin-top:6px;display:block;font-size:12.5px;color:var(--ac2);font-weight:600}
+
+/* Marcador GPS independiente de la ruta */
+.gps-accuracy{
+  fill:#2563eb;
+  fill-opacity:.13;
+  stroke:#2563eb;
+  stroke-opacity:.35;
+  stroke-width:1;
+  pointer-events:none;
+}
+.gps-marker{
+  fill:#2563eb;
+  stroke:#ffffff;
+  stroke-width:2.5;
+  pointer-events:none;
+}
+.gps-center{
+  fill:#ffffff;
+  pointer-events:none;
+}
+@media(max-width:640px){
+  .btns{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .wrap{padding:10px 10px 20px}
+  header{padding:12px 14px}
+  h1{font-size:17.5px}
+  .lbl{font-size:5.7px}
+}
+</style>
+</head>
+<body>
+
+<section class="welcome" id="welcome" aria-label="Bienvenida al mapa del CBTis 126">
+  <div class="welcome-card">
+    <div class="welcome-logo">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFIIhG-EmWqvSXBrqmne3_9SJNouYup21QagpA8hR8eMhZDg9tL7VNrqk&s=10"
+        alt="Logotipo CBTis No. 126"
+        referrerpolicy="no-referrer"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+      >
+      <svg viewBox="0 0 36 36" width="64" height="64" style="display:none" aria-hidden="true">
+        <circle cx="18" cy="18" r="15" fill="#7f1d1d" stroke="#450a0a" stroke-width="2"/>
+        <text x="18" y="16" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="800">CBTis</text>
+        <text x="18" y="25" text-anchor="middle" fill="#fde68a" font-size="6.5" font-weight="700">126</text>
+      </svg>
+    </div>
+    <span class="welcome-tag">Calkiní, Campeche</span>
+    <h2>¡Bienvenido al CBTis No. 126!</h2>
+    <p>Ubica salones, talleres, laboratorios y áreas del plantel, consulta rutas peatonales y simula recorridos en segundos.</p>
+    <button class="enter-btn" id="enterBtn">Entrar al mapa →</button>
+  </div>
+</section>
+
+<div class="wrap hidden" id="app">
+  <header>
+    <div class="brand">
+      <div class="logo-box" title="CBTis No. 126">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFIIhG-EmWqvSXBrqmne3_9SJNouYup21QagpA8hR8eMhZDg9tL7VNrqk&s=10"
+          alt="Logo CBTis 126"
+          referrerpolicy="no-referrer"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+        >
+        <svg viewBox="0 0 36 36" width="32" height="32" style="display:none" aria-hidden="true">
+          <circle cx="18" cy="18" r="15" fill="#7f1d1d" stroke="#450a0a" stroke-width="2"/>
+          <text x="18" y="16" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="800">CBTis</text>
+          <text x="18" y="25" text-anchor="middle" fill="#fde68a" font-size="6.5" font-weight="700">126</text>
+        </svg>
+      </div>
+      <div>
+        <h1>Mapa CBTis 126</h1>
+        <div class="sub">Guía de espacios y rutas · Calkiní, Campeche</div>
+      </div>
+    </div>
+    <div class="hdr-actions">
+      <button class="mini-btn" id="backWelcome" title="Volver a la bienvenida">Inicio</button>
+      <button class="mini-btn" id="toggleHelp" aria-expanded="false" title="Ver ayuda rápida">ℹ️ Ayuda</button>
+      <span class="badge">Campus</span>
+    </div>
+  </header>
+
+  <div class="help-card hidden" id="helpCard">
+    <b>Cómo usar el mapa</b>
+    <ul>
+      <li><b>Buscar destino:</b> Escribe en el buscador y selecciona una de las opciones para trazar la ruta.</li>
+      <li><b>Seleccionar en el plano:</b> Cada rectángulo representa un espacio. Tócalo para elegirlo como destino.</li>
+      <li><b>Atajos y compartir:</b> Usa los accesos rápidos para ir a lugares frecuentes o toca <i>Compartir</i> para pasar el enlace.</li>
+      <li><b>Voz, GPS y simulación:</b> Escucha las indicaciones con <i>Leer ruta</i>, activa <i>Seguirme (GPS)</i> o prueba <i>Simular recorrido</i>.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <div class="filter-bar">
+      <input type="search" id="search" class="search-in" placeholder="Buscar espacio (ej. audiovisual, biblioteca, aula)…" aria-label="Buscar espacio">
+      <button class="mini-btn" id="clearFilter" type="button">Limpiar</button>
+    </div>
+
+    <div class="results-box hidden" id="resultsBox" aria-label="Opciones encontradas">
+      <div class="results-top">
+        <span id="resultsCount">Opciones</span>
+        <button type="button" class="hide-res-btn" id="hideResults">Ocultar lista</button>
+      </div>
+      <div id="resultsList" style="display:grid;gap:6px"></div>
+    </div>
+
+    <div class="chips" id="chips" role="group" aria-label="Filtrar destino por categoría">
+      <button type="button" class="chip active" data-cat="all">Todos</button>
+      <button type="button" class="chip" data-cat="aulas">Aulas</button>
+      <button type="button" class="chip" data-cat="labs">Labs y talleres</button>
+      <button type="button" class="chip" data-cat="areas">Áreas comunes</button>
+    </div>
+
+    <div class="quick-row" id="quickPlaces" aria-label="Accesos rápidos a lugares clave">
+      <span class="quick-lbl">Ir a:</span>
+      <button type="button" class="q-btn" data-id="entrada">Entrada</button>
+      <button type="button" class="q-btn" data-id="biblio">Biblioteca</button>
+      <button type="button" class="q-btn" data-id="comp_a">Cómputo A</button>
+      <button type="button" class="q-btn" data-id="coop">Cooperativa</button>
+      <button type="button" class="q-btn" data-id="oficinas">Oficinas</button>
+    </div>
+
+    <div class="row">
+      <span class="dot-tag">●</span>
+      <select id="from" aria-label="Origen"></select>
+    </div>
+    <div class="row">
+      <span class="dot-tag" style="color:var(--rd)">▼</span>
+      <select id="to" aria-label="Destino"></select>
+      <button class="sw" id="swap" title="Invertir origen y destino">⇅</button>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button id="gps">📡 Seguirme (GPS)</button>
+    <button id="sim">▶ Simular recorrido</button>
+    <button id="voice">🔊 Leer ruta</button>
+    <button id="share">🔗 Compartir</button>
+  </div>
+
+  <small id="st" role="status" aria-live="polite"></small>
+
+  <div class="map">
+    <svg viewBox="-12 -6 624 432" id="svg" role="img" aria-label="Plano interactivo del CBTis 126">
+      <g id="roads"></g>
+      <g id="bld"></g>
+      <g id="haloLayer" aria-hidden="true"></g>
+      <g id="compass" aria-hidden="true">
+        <text x="340" y="9" class="dir-lbl">NORTE</text>
+        <text x="372" y="418" class="dir-lbl">SUR</text>
+        <text x="4" y="135" class="dir-lbl">OESTE</text>
+        <text x="601" y="195" class="dir-lbl">ESTE</text>
+        <g id="compassRose" transform="translate(48,48)">
+          <circle cx="0" cy="0" r="14" class="compass-ring"/>
+          <polygon points="0,-11 3.5,0 -3.5,0" class="compass-needle-n"/>
+          <polygon points="0,11 3.5,0 -3.5,0" class="compass-needle-s"/>
+          <circle cx="0" cy="0" r="2.2" fill="#171c26"/>
+        </g>
+        <text x="48" y="31" class="dir-lbl" style="font-size:6.5px">N</text>
+      </g>
+      <polyline id="route" class="route" points=""></polyline>
+      <g id="pins"></g>
+      <!-- Nueva capa: el GPS ya no se borra al actualizar la ruta -->
+      <g id="userLayer" aria-label="Tu ubicación actual"></g>
+    </svg>
+  </div>
+
+  <div class="meta-row">
+    <div class="legend">
+      <span><i class="lg-dot" style="background:var(--ac)"></i> Origen</span>
+      <span><i class="lg-dot" style="background:var(--rd)"></i> Destino</span>
+      <span><i class="lg-line"></i> Ruta peatonal</span>
+    </div>
+    <small>📍 Cada rectángulo representa un espacio del plantel. Toca el lugar al que deseas llegar o búscalo por su nombre.</small>
+  </div>
+
+  <div class="info" id="info">
+    <b>¡Comencemos!</b>
+    <small>Selecciona un destino para visualizar tu ruta desde la entrada principal.</small>
+  </div>
+</div>
+
+<script>
+const CONFIG={
+  width:600,
+  height:420,
+  metersPerUnit:.35,
+  simSpeedMetersPerSec:6.5,
+  geo:{
+    NO:{lat:20.3852,lng:-90.0560},
+    SE:{lat:20.3836,lng:-90.0538}
+  }
+};
+
+const BUILDINGS=[
+  {id:"entrada",name:"Entrada principal",cat:"areas",x:12,y:230,w:68,h:42,entry:[92,250],info:"Acceso principal del plantel."},
+  {id:"plaza",name:"Plaza Cívica",cat:"areas",x:105,y:215,w:155,h:65,entry:[182,208],info:"Explanada central y actividades cívicas."},
+  {id:"t_const",name:"Taller de Construcción",cat:"labs",x:105,y:12,w:62,h:36,entry:[135,58],info:"Área práctica de construcción."},
+  {id:"almacen",name:"Almacén",cat:"areas",x:170,y:12,w:125,h:36,entry:[225,58],info:"Resguardo de materiales y equipo."},
+  {id:"aula16",name:"Aula 16",cat:"aulas",x:105,y:68,w:52,h:44,entry:[135,58],info:"Salón de clases · Edificio Norte."},
+  {id:"aula15",name:"Aula 15",cat:"aulas",x:159,y:68,w:44,h:44,entry:[181,58],info:"Salón de clases · Edificio Norte."},
+  {id:"aula14",name:"Aula 14",cat:"aulas",x:205,y:68,w:48,h:44,entry:[229,58],info:"Salón de clases · Edificio Norte."},
+  {id:"aula13",name:"Aula 13",cat:"aulas",x:255,y:68,w:52,h:44,entry:[281,58],info:"Salón de clases · Edificio Norte."},
+  {id:"aula12",name:"Aula 12",cat:"aulas",x:105,y:132,w:46,h:34,entry:[135,122],info:"Salón de clases · Zona Central."},
+  {id:"aula11",name:"Aula 11",cat:"aulas",x:153,y:132,w:40,h:34,entry:[173,122],info:"Salón de clases · Zona Central."},
+  {id:"aula10",name:"Aula 10",cat:"aulas",x:195,y:132,w:44,h:34,entry:[217,122],info:"Salón de clases · Zona Central."},
+  {id:"aula9",name:"Aula 9",cat:"aulas",x:241,y:132,w:42,h:34,entry:[262,122],info:"Salón de clases · Zona Central."},
+  {id:"aula8",name:"Aula 8",cat:"aulas",x:285,y:132,w:42,h:34,entry:[306,122],info:"Salón de clases · Zona Central."},
+  {id:"aula7",name:"Aula 7",cat:"aulas",x:274,y:170,w:53,h:32,entry:[300,208],info:"Salón de clases · Zona Central."},
+  {id:"lab_fis",name:"Laboratorio de Física",cat:"labs",x:105,y:170,w:56,h:32,entry:[133,208],info:"Prácticas experimentales de física."},
+  {id:"lab_bio",name:"Laboratorio de Biología",cat:"labs",x:163,y:170,w:98,h:32,entry:[212,208],info:"Prácticas experimentales de biología."},
+  {id:"s_medios",name:"Sala de Medios Audiovisuales",cat:"areas",x:430,y:12,w:156,h:42,entry:[418,58],info:"Proyecciones y recursos audiovisuales."},
+  {id:"aula18",name:"Aula 18",cat:"aulas",x:430,y:72,w:52,h:46,entry:[456,122],info:"Salón de clases · Ala Noreste."},
+  {id:"aula17",name:"Aula 17",cat:"aulas",x:484,y:72,w:48,h:46,entry:[508,122],info:"Salón de clases · Ala Noreste."},
+  {id:"enferm",name:"Taller de Enfermería",cat:"labs",x:534,y:72,w:52,h:46,entry:[560,122],info:"Prácticas de enfermería y micro hospital."},
+  {id:"banos1",name:"Baños Norte / Centro",cat:"areas",x:430,y:142,w:56,h:48,entry:[458,208],info:"Sanitarios del plantel."},
+  {id:"coop",name:"Cooperativa",cat:"areas",x:492,y:142,w:94,h:48,entry:[539,208],info:"Alimentos, snacks y bebidas."},
+  {id:"aula6",name:"Aula 6",cat:"aulas",x:345,y:215,w:42,h:34,entry:[366,208],info:"Salón de clases · Zona Este."},
+  {id:"aula5",name:"Aula 5",cat:"aulas",x:389,y:215,w:44,h:34,entry:[418,208],info:"Salón de clases · Zona Este."},
+  {id:"aula4",name:"Aula 4",cat:"aulas",x:435,y:215,w:52,h:34,entry:[461,208],info:"Salón de clases · Zona Este."},
+  {id:"aula3",name:"Aula 3",cat:"aulas",x:489,y:215,w:44,h:34,entry:[511,208],info:"Salón de clases · Zona Este."},
+  {id:"aula2",name:"Aula 2",cat:"aulas",x:535,y:215,w:51,h:34,entry:[560,208],info:"Salón de clases · Zona Este."},
+  {id:"comp_b",name:"Centro de Cómputo B",cat:"labs",x:345,y:253,w:88,h:42,entry:[378,306],info:"Laboratorio de cómputo y prácticas digitales."},
+  {id:"lab_qui",name:"Laboratorio de Química",cat:"labs",x:435,y:253,w:98,h:42,entry:[484,306],info:"Prácticas experimentales de química."},
+  {id:"banos2",name:"Baños Sur / Este",cat:"areas",x:535,y:253,w:51,h:42,entry:[560,306],info:"Sanitarios del plantel."},
+  {id:"caed",name:"CAED",cat:"areas",x:105,y:318,w:34,h:36,entry:[122,306],info:"Centro de Atención a Estudiantes con Discapacidad."},
+  {id:"biblio",name:"Biblioteca",cat:"areas",x:141,y:318,w:54,h:36,entry:[168,306],info:"Consulta bibliográfica y espacio de estudio."},
+  {id:"copiado",name:"Centro de Copiado",cat:"areas",x:197,y:318,w:54,h:36,entry:[224,306],info:"Copiado e impresiones."},
+  {id:"s_audio",name:"Sala Audiovisual",cat:"areas",x:275,y:318,w:72,h:36,entry:[311,306],info:"Espacio para presentaciones y proyecciones."},
+  {id:"comp_a",name:"Centro de Cómputo Sala A",cat:"labs",x:412,y:318,w:102,h:36,entry:[463,306],info:"Laboratorio de cómputo Sala A."},
+  {id:"aula1",name:"Aula 1",cat:"aulas",x:516,y:318,w:70,h:36,entry:[551,306],info:"Salón de clases · Zona Sur."},
+  {id:"oficinas",name:"Oficinas Administrativas",cat:"areas",x:105,y:372,w:242,h:34,entry:[226,363],info:"Servicios escolares, trámites y administración."}
+];
+
+const NODES={
+  pW1:[92,58],pW2:[92,122],pW3:[92,208],pW4:[92,250],pW5:[92,306],pB1:[92,363],
+  pN1:[135,58],pN2:[225,58],pN3:[336,58],pN4:[418,58],
+  pM1:[92,122],pM2:[212,122],pM3:[336,122],pM4:[418,122],pM5:[592,122],
+  pC1:[212,208],pC2:[336,208],pC3:[434,208],pC4:[592,208],
+  pS1:[168,306],pS2:[336,306],pS2b:[378,306],pS3:[434,306],pS4:[592,306],
+  pB2:[226,363],pB3:[378,363]
+};
+
+const EDGES=[
+  ["pW1","pW2"],["pW2","pW3"],["pW3","pW4"],["pW4","pW5"],["pW5","pB1"],
+  ["pW1","pN1"],["pN1","pN2"],["pN2","pN3"],["pN3","pN4"],
+  ["pW2","pM1"],["pM1","pM2"],["pM2","pM3"],["pM3","pM4"],["pM4","pM5"],
+  ["pW3","pC1"],["pC1","pC2"],["pC2","pC3"],["pC3","pC4"],
+  ["pW5","pS1"],["pS1","pS2"],["pS2","pS2b"],["pS2b","pS3"],["pS3","pS4"],
+  ["pB1","pB2"],["pB2","pB3"],
+  ["pN3","pM3"],["pN4","pM4"],["pM3","pC2"],["pM4","pC3"],["pM5","pC4"],
+  ["pC2","pS2"],["pC3","pS3"],["pC4","pS4"],["pS2b","pB3"]
+];
+
+const CAT_LABELS={aulas:"Aula",labs:"Lab / Taller",areas:"Área común"};
+
+const state={
+  buildingsById:{},
+  adjacencyList:{},
+  userPos:null,
+  userAccuracy:0,
+  gpsWatchId:null,
+  simRafId:null,
+  isSimulating:false,
+  lastRoutePoints:[],
+  activeCat:"all",
+  searchQuery:"",
+  resultsVisible:false,
+  lastSpokenDir:"",
+  speechText:""
+};
+
+const $=id=>document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+
+const dom={
+  welcome:$("welcome"),
+  enterBtn:$("enterBtn"),
+  app:$("app"),
+  backWelcome:$("backWelcome"),
+  toggleHelp:$("toggleHelp"),
+  helpCard:$("helpCard"),
+  search:$("search"),
+  clearFilter:$("clearFilter"),
+  resultsBox:$("resultsBox"),
+  resultsCount:$("resultsCount"),
+  resultsList:$("resultsList"),
+  hideResults:$("hideResults"),
+  chips:$("chips"),
+  quickPlaces:$("quickPlaces"),
+  svg:$("svg"),
+  from:$("from"),
+  to:$("to"),
+  swap:$("swap"),
+  gps:$("gps"),
+  sim:$("sim"),
+  voice:$("voice"),
+  share:$("share"),
+  status:$("st"),
+  info:$("info"),
+  roads:$("roads"),
+  bld:$("bld"),
+  haloLayer:$("haloLayer"),
+  compassRose:$("compassRose"),
+  route:$("route"),
+  pins:$("pins"),
+  userLayer:$("userLayer"),
+  meOption:null
+};
+
+function normText(s){
+  return (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+}
+
+function svgEl(tag,attrs,parent){
+  const el=document.createElementNS(NS,tag);
+  Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+  if(parent)parent.appendChild(el);
+  return el;
+}
+
+function dist(a,b){
+  return Math.hypot(a[0]-b[0],a[1]-b[1]);
+}
+
+function setStatus(s){
+  dom.status.textContent=s;
+}
+
+function speak(text,force=false){
+  if(!("speechSynthesis" in window)||!text)return;
+  if(!force&&window.speechSynthesis.speaking)return;
+  window.speechSynthesis.cancel();
+  const utter=new SpeechSynthesisUtterance(text);
+  utter.lang="es-MX";
+  utter.rate=1.02;
+  utter.pitch=1.05;
+  window.speechSynthesis.speak(utter);
+}
+
+function stopSpeaking(){
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();
+  state.lastSpokenDir="";
+}
+
+function getCardinalDirection(a,b){
+  const dx=b[0]-a[0];
+  const dy=b[1]-a[1];
+  if(Math.abs(dx)<2&&Math.abs(dy)<2)return "";
+  if(Math.abs(dx)>=Math.abs(dy))return dx>0?"hacia el este":"hacia el oeste";
+  return dy>0?"hacia el sur":"hacia el norte";
+}
+
+function buildRouteGuidance(pts,targetName,meters,minutes){
+  if(!pts||pts.length<2)return `Destino seleccionado: ${targetName}.`;
+  const dirs=[];
+  for(let i=1;i<pts.length;i++){
+    const d=getCardinalDirection(pts[i-1],pts[i]);
+    if(d&&dirs[dirs.length-1]!==d)dirs.push(d);
+  }
+  const stepsText=dirs.length?`Avanza ${dirs.slice(0,3).join(", luego ")}.`:"";
+  return `Para llegar a ${targetName}, camina aproximadamente ${meters} metros, unos ${minutes} minutos. ${stepsText}`;
+}
+
+function updateHalo(target){
+  dom.haloLayer.replaceChildren();
+  if(!target)return;
+  svgEl("rect",{
+    x:target.x-2,
+    y:target.y-2,
+    width:target.w+4,
+    height:target.h+4,
+    rx:7,
+    class:"halo-ring"
+  },dom.haloLayer);
+}
+
+function syncQuickButtons(){
+  if(!dom.quickPlaces)return;
+  const curTo=dom.to.value;
+  dom.quickPlaces.querySelectorAll(".q-btn").forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.id===curTo);
+  });
+}
+
+function segmentHitsRect(a,b,r){
+  const pad=1.5;
+
+  if(Math.abs(a[1]-b[1])<.001){
+    const y=a[1];
+    if(y<=r.y-pad||y>=r.y+r.h+pad)return false;
+    return Math.max(Math.min(a[0],b[0]),r.x-pad)<Math.min(Math.max(a[0],b[0]),r.x+r.w+pad);
+  }
+
+  if(Math.abs(a[0]-b[0])<.001){
+    const x=a[0];
+    if(x<=r.x-pad||x>=r.x+r.w+pad)return false;
+    return Math.max(Math.min(a[1],b[1]),r.y-pad)<Math.min(Math.max(a[1],b[1]),r.y+r.h+pad);
+  }
+
+  return true;
+}
+
+function clearSegment(a,b){
+  return !BUILDINGS.some(r=>segmentHitsRect(a,b,r));
+}
+
+function addEdge(a,b){
+  const A=NODES[a],B=NODES[b];
+  if(!A||!B||!clearSegment(A,B))return;
+
+  const w=dist(A,B);
+
+  state.adjacencyList[a]=state.adjacencyList[a]||[];
+  state.adjacencyList[b]=state.adjacencyList[b]||[];
+
+  state.adjacencyList[a].push([b,w]);
+  state.adjacencyList[b].push([a,w]);
+
+  svgEl("line",{
+    x1:A[0],y1:A[1],
+    x2:B[0],y2:B[1],
+    class:"road"
+  },dom.roads);
+}
+
+function shortestPath(start,end){
+  const names=Object.keys(NODES);
+  const d={},prev={},done=new Set();
+
+  names.forEach(n=>d[n]=Infinity);
+  d[start]=0;
+
+  while(done.size<names.length){
+    let u=null,best=Infinity;
+
+    for(const n of names){
+      if(!done.has(n)&&d[n]<best){
+        best=d[n];
+        u=n;
+      }
+    }
+
+    if(u===null||u===end)break;
+
+    done.add(u);
+
+    const neighbors=state.adjacencyList[u]||[];
+
+    for(const [v,w] of neighbors){
+      const nd=d[u]+w;
+      if(nd<d[v]){
+        d[v]=nd;
+        prev[v]=u;
+      }
+    }
+  }
+
+  if(!Number.isFinite(d[end]))return null;
+
+  const path=[];
+  let cur=end;
+
+  while(cur!==undefined){
+    path.unshift(cur);
+    if(cur===start)break;
+    cur=prev[cur];
+  }
+
+  return path[0]===start?{nodes:path,distance:d[end]}:null;
+}
+
+function nearestNode(p){
+  let best=null,bestD=Infinity;
+
+  for(const [n,q] of Object.entries(NODES)){
+    const d=dist(p,q);
+
+    if(d<bestD&&clearSegment(p,q)){
+      best=n;
+      bestD=d;
+    }
+  }
+
+  return best;
+}
+
+function connector(a,b){
+  const candidates=[
+    [a,[b[0],a[1]],b],
+    [a,[a[0],b[1]],b]
+  ];
+
+  for(const pts of candidates){
+    const clean=pts.filter((p,i)=>i===0||dist(p,pts[i-1])>.01);
+    if(clean.slice(1).every((p,i)=>clearSegment(clean[i],p)))return clean;
+  }
+
+  return null;
+}
+
+function appendPoints(target,more){
+  for(const p of more){
+    if(!target.length||dist(target[target.length-1],p)>.01){
+      target.push(p.slice());
+    }
+  }
+}
+
+function routePoints(startPoint,startNode,endNode,endPoint){
+  const p=shortestPath(startNode,endNode);
+  if(!p)return null;
+
+  const result=[startPoint.slice()];
+  const startConnector=connector(startPoint,NODES[startNode]);
+
+  if(!startConnector)return null;
+
+  appendPoints(result,startConnector.slice(1));
+
+  for(const n of p.nodes){
+    appendPoints(result,[NODES[n]]);
+  }
+
+  const endConnector=connector(NODES[endNode],endPoint);
+  if(!endConnector)return null;
+
+  appendPoints(result,endConnector.slice(1));
+
+  for(let i=1;i<result.length;i++){
+    if(!clearSegment(result[i-1],result[i]))return null;
+  }
+
+  return result;
+}
+
+function matchesFilter(b){
+  const catOk=state.activeCat==="all"||b.cat===state.activeCat;
+  const q=normText(state.searchQuery);
+  const qOk=!q||normText(b.name).includes(q)||normText(b.info).includes(q);
+  return catOk&&qOk;
+}
+
+function renderSearchResults(matches){
+  const hasQuery=Boolean(normText(state.searchQuery));
+
+  if(!hasQuery||!state.resultsVisible){
+    dom.resultsBox.classList.add("hidden");
+    return;
+  }
+
+  dom.resultsBox.classList.remove("hidden");
+  dom.resultsList.replaceChildren();
+
+  dom.resultsCount.textContent=matches.length
+    ?`Opciones encontradas (${matches.length}) — toca una para ir:`
+    :"No se encontraron espacios con ese nombre.";
+
+  matches.forEach(b=>{
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="result-item"+(dom.to.value===b.id?" active":"");
+
+    btn.innerHTML=`
+      <span class="result-main">
+        <span class="result-name">${b.name}</span>
+        <span class="result-sub">${b.info}</span>
+      </span>
+      <span class="result-tag">${CAT_LABELS[b.cat]||"Espacio"}</span>
+    `;
+
+    btn.addEventListener("click",()=>{
+      stopSimulation();
+
+      if(!Array.from(dom.to.options).some(o=>o.value===b.id)){
+        populateToSelect(b.id);
+      }
+
+      dom.to.value=b.id;
+      drawRoute();
+      renderSearchResults(matches);
+
+      setStatus(`Destino elegido: ${b.name}`);
+      speak(`Ruta trazada hacia ${b.name}.`,true);
+    });
+
+    dom.resultsList.appendChild(btn);
+  });
+}
+
+function populateFromSelect(keepId){
+  dom.from.replaceChildren();
+
+  if(dom.meOption){
+    dom.from.appendChild(dom.meOption);
+  }
+
+  BUILDINGS.forEach(b=>{
+    const o=document.createElement("option");
+    o.value=b.id;
+    o.textContent=b.name;
+    dom.from.appendChild(o);
+  });
+
+  if(keepId&&Array.from(dom.from.options).some(o=>o.value===keepId&&!o.disabled)){
+    dom.from.value=keepId;
+  }else{
+    dom.from.value="entrada";
+  }
+}
+
+function populateToSelect(keepId){
+  dom.to.replaceChildren();
+
+  const placeholder=document.createElement("option");
+  placeholder.value="";
+  placeholder.textContent="Selecciona un destino...";
+  placeholder.disabled=true;
+  placeholder.selected=true;
+  dom.to.appendChild(placeholder);
+
+  const list=state.activeCat==="all"
+    ?BUILDINGS
+    :BUILDINGS.filter(b=>b.cat===state.activeCat);
+
+  const optionsList=list.length?list:BUILDINGS;
+
+  optionsList.forEach(b=>{
+    const o=document.createElement("option");
+    o.value=b.id;
+    o.textContent=b.name;
+    dom.to.appendChild(o);
+  });
+
+  if(keepId&&Array.from(dom.to.options).some(o=>o.value===keepId)){
+    dom.to.value=keepId;
+  }else{
+    dom.to.value="";
+  }
+}
+
+function applyFilters(showList=false){
+  const prevTo=dom.to.value;
+
+  populateToSelect(prevTo);
+
+  const matches=BUILDINGS.filter(matchesFilter);
+
+  if(showList&&normText(state.searchQuery)){
+    state.resultsVisible=true;
+  }
+
+  renderSearchResults(matches);
+  drawRoute();
+}
+
+function initCompass(){
+  if(!window.DeviceOrientationEvent)return;
+
+  window.addEventListener("deviceorientation",e=>{
+    let heading=null;
+
+    if(typeof e.webkitCompassHeading==="number"&&!Number.isNaN(e.webkitCompassHeading)){
+      heading=e.webkitCompassHeading;
+    }else if(e.absolute&&typeof e.alpha==="number"&&!Number.isNaN(e.alpha)){
+      heading=(360-e.alpha)%360;
+    }
+
+    if(heading!==null&&dom.compassRose){
+      dom.compassRose.setAttribute("transform",`translate(48,48) rotate(${-heading})`);
+    }
+  },true);
+}
+
+function init(){
+  EDGES.forEach(([a,b])=>addEdge(a,b));
+
+  BUILDINGS.forEach(b=>{
+    state.buildingsById[b.id]=b;
+
+    const rect=svgEl("rect",{
+      x:b.x,
+      y:b.y,
+      width:b.w,
+      height:b.h,
+      rx:5,
+      class:"b",
+      "data-id":b.id,
+      tabindex:"0",
+      role:"button",
+      "aria-label":`Seleccionar destino: ${b.name}`
+    },dom.bld);
+
+    const title=svgEl("title",{},rect);
+    title.textContent=`${b.name} — Toca para seleccionar como destino`;
+
+    rect.addEventListener("click",()=>{
+      stopSimulation();
+      dom.to.value=b.id;
+      drawRoute();
+      setStatus(`Destino elegido: ${b.name}`);
+      speak(`Destino: ${b.name}.`,true);
+    });
+
+    rect.addEventListener("keydown",e=>{
+      if(e.key==="Enter"||e.key===" "){
+        e.preventDefault();
+        rect.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+      }
+    });
+
+    const label=svgEl("text",{
+      x:b.x+b.w/2,
+      y:b.y+b.h/2+2,
+      class:"lbl"
+    },dom.bld);
+
+    label.textContent=b.name;
+  });
+
+  const opt=document.createElement("option");
+  opt.value="me";
+  opt.textContent="📍 Mi ubicación";
+  opt.disabled=true;
+  dom.meOption=opt;
+
+  populateFromSelect("entrada");
+  populateToSelect("");
+
+  dom.from.value="entrada";
+  dom.to.value="";
+
+  initCompass();
+}
+
+function clearPins(){
+  dom.pins.replaceChildren();
+}
+
+/* Convierte la precisión del GPS a una elipse aproximada en el plano */
+function accuracyToSvg(accuracy,lat){
+  const {NO,SE}=CONFIG.geo;
+
+  const lngSpan=Math.abs(SE.lng-NO.lng);
+  const latSpan=Math.abs(NO.lat-SE.lat);
+
+  if(!lngSpan||!latSpan){
+    return {rx:8,ry:8};
+  }
+
+  const metersPerDegreeLng=111320*Math.cos(lat*Math.PI/180);
+  const metersPerDegreeLat=111320;
+
+  const rx=(accuracy/metersPerDegreeLng)*(CONFIG.width/lngSpan);
+  const ry=(accuracy/metersPerDegreeLat)*(CONFIG.height/latSpan);
+
+  return{
+    rx:Math.max(3,Math.min(45,rx)),
+    ry:Math.max(3,Math.min(45,ry))
+  };
+}
+
+/* Dibuja el punto azul en una capa que no se borra al cambiar rutas */
+function drawUserMarker(pos,accuracy=0,lat=CONFIG.geo.NO.lat){
+  dom.userLayer.replaceChildren();
+
+  if(!pos||!Number.isFinite(pos[0])||!Number.isFinite(pos[1]))return;
+
+  const sizes=accuracyToSvg(accuracy,lat);
+
+  if(accuracy>0){
+    svgEl("ellipse",{
+      cx:pos[0],
+      cy:pos[1],
+      rx:sizes.rx,
+      ry:sizes.ry,
+      class:"gps-accuracy"
+    },dom.userLayer);
+  }
+
+  svgEl("circle",{
+    cx:pos[0],
+    cy:pos[1],
+    r:9,
+    class:"gps-marker"
+  },dom.userLayer);
+
+  svgEl("circle",{
+    cx:pos[0],
+    cy:pos[1],
+    r:3,
+    class:"gps-center"
+  },dom.userLayer);
+}
+
+function clearUserMarker(){
+  dom.userLayer.replaceChildren();
+}
+
+function drawRoute(customPoints=null){
+
+  /* Si no hay destino, conserva el marcador GPS */
+  if(!dom.from.value||!dom.to.value){
+    dom.route.setAttribute("points","");
+    dom.haloLayer.replaceChildren();
+    clearPins();
+
+    drawUserMarker(state.userPos,state.userAccuracy);
+
+    document.querySelectorAll(".b").forEach(r=>{
+      r.classList.remove("sel","orig");
+    });
+
+    state.lastRoutePoints=[];
+    state.speechText="";
+
+    dom.info.innerHTML=`
+      <b>¡Comencemos!</b>
+      <small>
+        Selecciona un destino para visualizar tu ruta desde la entrada principal.
+        Puedes elegirlo en el plano, en el buscador o en la lista de destinos.
+      </small>
+    `;
+
+    syncQuickButtons();
+    return;
+  }
+
+  const target=state.buildingsById[dom.to.value];
+
+  if(!target)return;
+
+  syncQuickButtons();
+  updateHalo(target);
+
+  const fromValue=dom.from.value;
+  const usingMe=fromValue==="me"&&state.userPos;
+
+  document.querySelectorAll(".b").forEach(r=>{
+    r.classList.toggle("sel",r.dataset.id===target.id);
+    r.classList.toggle("orig",!usingMe&&r.dataset.id===fromValue&&fromValue!==target.id);
+  });
+
+  clearPins();
+  drawUserMarker(state.userPos,state.userAccuracy);
+
+  let startPoint,startNode;
+
+  if(usingMe){
+    startPoint=state.userPos.slice();
+    startNode=nearestNode(startPoint);
+  }else{
+    const source=state.buildingsById[fromValue];
+
+    if(!source){
+      dom.route.setAttribute("points","");
+      state.lastRoutePoints=[];
+      state.speechText="";
+      return;
+    }
+
+    startPoint=source.entry.slice();
+    startNode=nearestNode(startPoint);
+  }
+
+  const endNode=nearestNode(target.entry);
+
+  if(!startNode||!endNode){
+    dom.route.setAttribute("points","");
+    dom.info.textContent="No se encontró un pasillo conectado a una de las entradas.";
+    state.lastRoutePoints=[];
+    state.speechText="";
+    return;
+  }
+
+  if(!usingMe&&fromValue===target.id){
+    dom.route.setAttribute("points","");
+    state.lastRoutePoints=[];
+    state.speechText=`Ya estás en ${target.name}.`;
+    dom.info.innerHTML=`<b>${target.name}</b><small>${target.info}</small>`;
+    return;
+  }
+
+  const full=routePoints(startPoint,startNode,endNode,target.entry);
+
+  if(!full){
+    dom.route.setAttribute("points","");
+    state.lastRoutePoints=[];
+    state.speechText="";
+    dom.info.textContent="No existe una ruta peatonal libre entre esos espacios.";
+    return;
+  }
+
+  const pts=customPoints&&customPoints.length>1?customPoints:full;
+
+  state.lastRoutePoints=full;
+
+  dom.route.setAttribute(
+    "points",
+    pts.map(p=>p.join(",")).join(" ")
+  );
+
+  const meters=Math.round(
+    pts.slice(1).reduce((sum,p,i)=>sum+dist(pts[i],p),0)*CONFIG.metersPerUnit
+  );
+
+  const minutes=Math.max(1,Math.ceil(meters/84));
+  const end=full[full.length-1];
+
+  svgEl("circle",{
+    cx:end[0],
+    cy:end[1],
+    r:5,
+    fill:"var(--rd)"
+  },dom.pins);
+
+  const origin=pts[0];
+
+  svgEl("circle",{
+    cx:origin[0],
+    cy:origin[1],
+    r:5.5,
+    fill:"var(--ac)",
+    stroke:"#fff",
+    "stroke-width":1.6
+  },dom.pins);
+
+  state.speechText=buildRouteGuidance(full,target.name,meters,minutes);
+
+  if(usingMe&&meters<=2){
+    dom.info.innerHTML=`
+      <b>🎉 ¡Llegaste!</b>
+      <small>${target.name} · ${target.info}</small>
+    `;
+
+    speak(`¡Llegaste a ${target.name}!`,true);
+    stopSimulation();
+    return;
+  }
+
+  dom.info.innerHTML=`
+    <b>${target.name}</b>
+    <small>${target.info}</small>
+    <br>
+    <small>🚶 Distancia aproximada: ${meters} m · ${minutes} min caminando</small>
+    <span class="voice-tip">🔊 Toca "Leer ruta" para escuchar las indicaciones.</span>
+  `;
+}
+
+/* Detiene la lectura de ubicación sin borrar el último punto GPS */
+function stopGps(){
+  if(state.gpsWatchId!==null){
+    navigator.geolocation.clearWatch(state.gpsWatchId);
+    state.gpsWatchId=null;
+  }
+
+  dom.gps.classList.remove("on");
+  dom.gps.textContent="📡 Seguirme (GPS)";
+}
+
+function toggleGps(){
+  if(state.gpsWatchId!==null){
+    stopGps();
+    stopSpeaking();
+    setStatus("GPS apagado. Se conserva la última ubicación recibida.");
+    return;
+  }
+
+  if(!navigator.geolocation){
+    setStatus("Este navegador no ofrece geolocalización.");
+    return;
+  }
+
+  /* El GPS necesita HTTPS o localhost */
+  if(!window.isSecureContext){
+    setStatus("El GPS necesita una conexión segura HTTPS. Abre el mapa desde GitHub Pages o Netlify.");
+    return;
+  }
+
+  stopSimulation();
+  setStatus("Solicitando permiso y buscando ubicación…");
+
+  state.gpsWatchId=navigator.geolocation.watchPosition(pos=>{
+    const lat=pos.coords.latitude;
+    const lng=pos.coords.longitude;
+    const accuracy=pos.coords.accuracy;
+
+    const q=geoToSvg(lat,lng);
+
+    if(!Number.isFinite(q.x)||!Number.isFinite(q.y)){
+      setStatus("No se pudo convertir tu ubicación al plano.");
+      return;
+    }
+
+    state.userPos=[q.x,q.y];
+    state.userAccuracy=accuracy;
+
+    dom.meOption.disabled=false;
+
+    /* Si no hay destino, solo muestra el punto GPS */
+    if(dom.to.value){
+      dom.from.value="me";
+    }
+
+    drawUserMarker(state.userPos,state.userAccuracy,lat);
+
+    if(dom.to.value){
+      drawRoute();
+    }
+
+    const inside=q.x>=0&&q.x<=CONFIG.width&&q.y>=0&&q.y<=CONFIG.height;
+
+    if(inside){
+      setStatus(`GPS activo · precisión ±${Math.round(accuracy)} m`);
+    }else{
+      setStatus(`GPS activo · precisión ±${Math.round(accuracy)} m · Tu ubicación está fuera del área representada en el plano.`);
+    }
+  },err=>{
+    const messages={
+      1:"Permiso de ubicación denegado. Revisa los permisos del navegador.",
+      2:"No se pudo determinar tu ubicación. Comprueba que el GPS esté activado.",
+      3:"Se agotó el tiempo para obtener tu ubicación. Intenta nuevamente."
+    };
+
+    setStatus(messages[err.code]||"No se pudo obtener la ubicación.");
+    stopGps();
+  },{
+    enableHighAccuracy:true,
+    maximumAge:0,
+    timeout:30000
+  });
+
+  dom.gps.classList.add("on");
+  dom.gps.textContent="⏹ Detener GPS";
+}
+
+/* Proyección geográfica con validación */
+function geoToSvg(lat,lng){
+  const {NO,SE}=CONFIG.geo;
+
+  const lngSpan=SE.lng-NO.lng;
+  const latSpan=NO.lat-SE.lat;
+
+  if(!lngSpan||!latSpan){
+    return{x:NaN,y:NaN};
+  }
+
+  return{
+    x:((lng-NO.lng)/lngSpan)*CONFIG.width,
+    y:((NO.lat-lat)/latSpan)*CONFIG.height
+  };
+}
+
+function stopSimulation(){
+  if(state.simRafId!==null){
+    cancelAnimationFrame(state.simRafId);
+    state.simRafId=null;
+  }
+
+  state.isSimulating=false;
+  state.lastSpokenDir="";
+
+  dom.sim.classList.remove("on");
+  dom.sim.textContent="▶ Simular recorrido";
+}
+
+function toggleSimulation(){
+  if(state.isSimulating){
+    stopSimulation();
+    stopSpeaking();
+    setStatus("Simulación detenida");
+    return;
+  }
+
+  if(state.gpsWatchId!==null)stopGps();
+
+  if(dom.from.value==="me"){
+    dom.from.value="entrada";
+  }
+
+  drawRoute();
+
+  const pts=state.lastRoutePoints.map(p=>p.slice());
+
+  if(pts.length<2){
+    setStatus("Primero selecciona un destino para simular el recorrido.");
+    return;
+  }
+
+  state.isSimulating=true;
+  state.lastSpokenDir="";
+
+  dom.sim.classList.add("on");
+  dom.sim.textContent="⏹ Detener simulación";
+
+  setStatus("Simulando recorrido con guía de voz…");
+
+  const targetName=state.buildingsById[dom.to.value]?.name||"tu destino";
+
+  speak(`Iniciando recorrido hacia ${targetName}.`,true);
+
+  let index=1;
+  let pos=pts[0].slice();
+  let last=0;
+
+  function frame(now){
+    if(!state.isSimulating)return;
+
+    if(!last)last=now;
+
+    let remaining=CONFIG.simSpeedMetersPerSec/CONFIG.metersPerUnit*Math.min(.05,(now-last)/1000);
+    last=now;
+
+    const prevPos=pos.slice();
+
+    while(remaining>0&&index<pts.length){
+      const target=pts[index];
+      const d=dist(pos,target);
+
+      if(d<=remaining){
+        pos=target.slice();
+        remaining-=d;
+        index++;
+      }else{
+        pos=[
+          pos[0]+(target[0]-pos[0])*remaining/d,
+          pos[1]+(target[1]-pos[1])*remaining/d
+        ];
+        remaining=0;
+      }
+    }
+
+    const dir=getCardinalDirection(prevPos,pos);
+
+    if(dir&&dir!==state.lastSpokenDir){
+      state.lastSpokenDir=dir;
+      speak(`Sigue ${dir}.`,true);
+    }
+
+    state.userPos=pos.slice();
+    state.userAccuracy=0;
+    dom.meOption.disabled=false;
+
+    const remainingPoints=[pos,...pts.slice(index)];
+
+    dom.route.setAttribute(
+      "points",
+      remainingPoints.map(p=>p.join(",")).join(" ")
+    );
+
+    clearPins();
+
+    svgEl("circle",{
+      cx:pts[pts.length-1][0],
+      cy:pts[pts.length-1][1],
+      r:5,
+      fill:"var(--rd)"
+    },dom.pins);
+
+    /* La simulación utiliza la misma capa independiente del GPS */
+    drawUserMarker(pos,0);
+
+    if(index>=pts.length){
+      stopSimulation();
+      dom.from.value="me";
+      drawRoute();
+      setStatus("Recorrido completado");
+      speak(`Has llegado a ${targetName}.`,true);
+      return;
+    }
+
+    state.simRafId=requestAnimationFrame(frame);
+  }
+
+  state.simRafId=requestAnimationFrame(frame);
+}
+
+dom.voice.addEventListener("click",()=>{
+  if(!("speechSynthesis" in window)){
+    setStatus("Tu navegador no soporta voz integrada.");
+    return;
+  }
+
+  if(window.speechSynthesis.speaking){
+    stopSpeaking();
+    setStatus("Voz detenida.");
+    return;
+  }
+
+  const text=state.speechText||(
+    dom.to.value
+      ?`Destino seleccionado: ${state.buildingsById[dom.to.value]?.name||""}`
+      :"Primero selecciona un destino."
+  );
+
+  if(!dom.to.value){
+    setStatus("Primero selecciona un destino.");
+    return;
+  }
+
+  setStatus("Leyendo indicaciones…");
+  speak(text,true);
+});
+
+dom.share.addEventListener("click",async()=>{
+  const destName=state.buildingsById[dom.to.value]?.name||"CBTis 126";
+  const shareUrl=window.location.href;
+  const shareText=`Ruta hacia ${destName} en el Mapa CBTis 126`;
+
+  try{
+    if(navigator.share){
+      await navigator.share({
+        title:"Mapa CBTis 126",
+        text:shareText,
+        url:shareUrl
+      });
+
+      setStatus("Enlace compartido.");
+      return;
+    }
+
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(shareUrl);
+      setStatus("¡Enlace copiado al portapapeles!");
+      return;
+    }
+  }catch(_){}
+
+  setStatus(`Listo para compartir: ${shareText}`);
+});
+
+dom.quickPlaces.addEventListener("click",e=>{
+  const btn=e.target.closest(".q-btn");
+  if(!btn)return;
+
+  const id=btn.dataset.id;
+
+  if(!state.buildingsById[id])return;
+
+  stopSimulation();
+
+  if(!Array.from(dom.to.options).some(o=>o.value===id)){
+    state.activeCat="all";
+
+    dom.chips.querySelectorAll(".chip").forEach(c=>{
+      c.classList.toggle("active",c.dataset.cat==="all");
+    });
+
+    populateToSelect(id);
+  }
+
+  dom.to.value=id;
+  drawRoute();
+
+  setStatus(`Destino rápido: ${state.buildingsById[id].name}`);
+});
+
+dom.enterBtn.addEventListener("click",()=>{
+  dom.welcome.classList.add("leaving");
+
+  setTimeout(()=>{
+    dom.welcome.classList.add("hidden");
+    dom.welcome.classList.remove("leaving");
+
+    dom.app.classList.remove("hidden");
+
+    requestAnimationFrame(()=>{
+      dom.app.classList.add("show");
+    });
+  },240);
+});
+
+dom.backWelcome.addEventListener("click",()=>{
+  stopSimulation();
+  stopSpeaking();
+
+  dom.app.classList.remove("show");
+
+  setTimeout(()=>{
+    dom.app.classList.add("hidden");
+    dom.welcome.classList.remove("hidden");
+  },180);
+});
+
+dom.toggleHelp.addEventListener("click",()=>{
+  const isHidden=dom.helpCard.classList.toggle("hidden");
+  dom.toggleHelp.setAttribute("aria-expanded",String(!isHidden));
+});
+
+dom.search.addEventListener("input",e=>{
+  state.searchQuery=e.target.value;
+  applyFilters(true);
+});
+
+dom.hideResults.addEventListener("click",()=>{
+  state.resultsVisible=false;
+  dom.resultsBox.classList.add("hidden");
+});
+
+dom.clearFilter.addEventListener("click",()=>{
+  state.searchQuery="";
+  state.activeCat="all";
+  state.resultsVisible=false;
+
+  dom.search.value="";
+
+  dom.chips.querySelectorAll(".chip").forEach(c=>{
+    c.classList.toggle("active",c.dataset.cat==="all");
+  });
+
+  setStatus("");
+  applyFilters(false);
+});
+
+dom.chips.addEventListener("click",e=>{
+  const btn=e.target.closest(".chip");
+  if(!btn)return;
+
+  state.activeCat=btn.dataset.cat;
+
+  dom.chips.querySelectorAll(".chip").forEach(c=>{
+    c.classList.toggle("active",c===btn);
+  });
+
+  applyFilters(false);
+});
+
+dom.gps.addEventListener("click",toggleGps);
+dom.sim.addEventListener("click",toggleSimulation);
+
+dom.from.addEventListener("change",()=>{
+  stopSimulation();
+  stopSpeaking();
+  drawRoute();
+});
+
+dom.to.addEventListener("change",()=>{
+  stopSimulation();
+  stopSpeaking();
+  drawRoute();
+
+  if(state.resultsVisible&&normText(state.searchQuery)){
+    renderSearchResults(BUILDINGS.filter(matchesFilter));
+  }
+});
+
+dom.swap.addEventListener("click",()=>{
+  stopSimulation();
+  stopSpeaking();
+
+  if(!dom.to.value){
+    setStatus("Primero selecciona un destino para invertir la ruta.");
+    return;
+  }
+
+  if(dom.from.value==="me"){
+    setStatus("Para invertir la ruta, selecciona primero un espacio como origen.");
+    return;
+  }
+
+  const a=dom.from.value;
+  dom.from.value=dom.to.value;
+  dom.to.value=a;
+
+  drawRoute();
+});
+
+init();
+drawRoute();
+</script>
+</body>
+</html>

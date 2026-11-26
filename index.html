@@ -246,6 +246,26 @@ svg{display:block;width:100%;height:auto}
 }
 .info b{display:block;margin-bottom:3px;font-size:16px;color:var(--tx)}
 .voice-tip{margin-top:6px;display:block;font-size:12.5px;color:var(--ac2);font-weight:600}
+
+/* Marcador GPS independiente de la ruta */
+.gps-accuracy{
+  fill:#2563eb;
+  fill-opacity:.13;
+  stroke:#2563eb;
+  stroke-opacity:.35;
+  stroke-width:1;
+  pointer-events:none;
+}
+.gps-marker{
+  fill:#2563eb;
+  stroke:#ffffff;
+  stroke-width:2.5;
+  pointer-events:none;
+}
+.gps-center{
+  fill:#ffffff;
+  pointer-events:none;
+}
 @media(max-width:640px){
   .btns{grid-template-columns:1fr 1fr}
 }
@@ -258,6 +278,7 @@ svg{display:block;width:100%;height:auto}
 </style>
 </head>
 <body>
+
 <section class="welcome" id="welcome" aria-label="Bienvenida al mapa del CBTis 126">
   <div class="welcome-card">
     <div class="welcome-logo">
@@ -386,8 +407,10 @@ svg{display:block;width:100%;height:auto}
         </g>
         <text x="48" y="31" class="dir-lbl" style="font-size:6.5px">N</text>
       </g>
-      <polyline id="route" class="route" points=""/>
+      <polyline id="route" class="route" points=""></polyline>
       <g id="pins"></g>
+      <!-- Nueva capa: el GPS ya no se borra al actualizar la ruta -->
+      <g id="userLayer" aria-label="Tu ubicación actual"></g>
     </svg>
   </div>
 
@@ -484,6 +507,7 @@ const state={
   buildingsById:{},
   adjacencyList:{},
   userPos:null,
+  userAccuracy:0,
   gpsWatchId:null,
   simRafId:null,
   isSimulating:false,
@@ -529,6 +553,7 @@ const dom={
   compassRose:$("compassRose"),
   route:$("route"),
   pins:$("pins"),
+  userLayer:$("userLayer"),
   meOption:null
 };
 
@@ -812,7 +837,6 @@ function renderSearchResults(matches){
   });
 }
 
-/* ORIGEN: conserva Entrada principal como punto de partida inicial */
 function populateFromSelect(keepId){
   dom.from.replaceChildren();
 
@@ -834,7 +858,6 @@ function populateFromSelect(keepId){
   }
 }
 
-/* DESTINO: inicia vacío para evitar una ruta automática */
 function populateToSelect(keepId){
   dom.to.replaceChildren();
 
@@ -963,13 +986,75 @@ function clearPins(){
   dom.pins.replaceChildren();
 }
 
+/* Convierte la precisión del GPS a una elipse aproximada en el plano */
+function accuracyToSvg(accuracy,lat){
+  const {NO,SE}=CONFIG.geo;
+
+  const lngSpan=Math.abs(SE.lng-NO.lng);
+  const latSpan=Math.abs(NO.lat-SE.lat);
+
+  if(!lngSpan||!latSpan){
+    return {rx:8,ry:8};
+  }
+
+  const metersPerDegreeLng=111320*Math.cos(lat*Math.PI/180);
+  const metersPerDegreeLat=111320;
+
+  const rx=(accuracy/metersPerDegreeLng)*(CONFIG.width/lngSpan);
+  const ry=(accuracy/metersPerDegreeLat)*(CONFIG.height/latSpan);
+
+  return{
+    rx:Math.max(3,Math.min(45,rx)),
+    ry:Math.max(3,Math.min(45,ry))
+  };
+}
+
+/* Dibuja el punto azul en una capa que no se borra al cambiar rutas */
+function drawUserMarker(pos,accuracy=0,lat=CONFIG.geo.NO.lat){
+  dom.userLayer.replaceChildren();
+
+  if(!pos||!Number.isFinite(pos[0])||!Number.isFinite(pos[1]))return;
+
+  const sizes=accuracyToSvg(accuracy,lat);
+
+  if(accuracy>0){
+    svgEl("ellipse",{
+      cx:pos[0],
+      cy:pos[1],
+      rx:sizes.rx,
+      ry:sizes.ry,
+      class:"gps-accuracy"
+    },dom.userLayer);
+  }
+
+  svgEl("circle",{
+    cx:pos[0],
+    cy:pos[1],
+    r:9,
+    class:"gps-marker"
+  },dom.userLayer);
+
+  svgEl("circle",{
+    cx:pos[0],
+    cy:pos[1],
+    r:3,
+    class:"gps-center"
+  },dom.userLayer);
+}
+
+function clearUserMarker(){
+  dom.userLayer.replaceChildren();
+}
+
 function drawRoute(customPoints=null){
 
-  /* Evita dibujar una ruta hasta que exista un destino */
+  /* Si no hay destino, conserva el marcador GPS */
   if(!dom.from.value||!dom.to.value){
     dom.route.setAttribute("points","");
     dom.haloLayer.replaceChildren();
-    dom.pins.replaceChildren();
+    clearPins();
+
+    drawUserMarker(state.userPos,state.userAccuracy);
 
     document.querySelectorAll(".b").forEach(r=>{
       r.classList.remove("sel","orig");
@@ -1006,6 +1091,7 @@ function drawRoute(customPoints=null){
   });
 
   clearPins();
+  drawUserMarker(state.userPos,state.userAccuracy);
 
   let startPoint,startNode;
 
@@ -1110,6 +1196,7 @@ function drawRoute(customPoints=null){
   `;
 }
 
+/* Detiene la lectura de ubicación sin borrar el último punto GPS */
 function stopGps(){
   if(state.gpsWatchId!==null){
     navigator.geolocation.clearWatch(state.gpsWatchId);
@@ -1124,7 +1211,7 @@ function toggleGps(){
   if(state.gpsWatchId!==null){
     stopGps();
     stopSpeaking();
-    setStatus("GPS apagado");
+    setStatus("GPS apagado. Se conserva la última ubicación recibida.");
     return;
   }
 
@@ -1133,49 +1220,83 @@ function toggleGps(){
     return;
   }
 
+  /* El GPS necesita HTTPS o localhost */
+  if(!window.isSecureContext){
+    setStatus("El GPS necesita una conexión segura HTTPS. Abre el mapa desde GitHub Pages o Netlify.");
+    return;
+  }
+
   stopSimulation();
   setStatus("Solicitando permiso y buscando ubicación…");
 
   state.gpsWatchId=navigator.geolocation.watchPosition(pos=>{
-    const q=geoToSvg(pos.coords.latitude,pos.coords.longitude);
+    const lat=pos.coords.latitude;
+    const lng=pos.coords.longitude;
+    const accuracy=pos.coords.accuracy;
 
-    if(q.x<0||q.x>CONFIG.width||q.y<0||q.y>CONFIG.height){
-      setStatus("Tu ubicación parece estar fuera del área del plano.");
+    const q=geoToSvg(lat,lng);
+
+    if(!Number.isFinite(q.x)||!Number.isFinite(q.y)){
+      setStatus("No se pudo convertir tu ubicación al plano.");
       return;
     }
 
     state.userPos=[q.x,q.y];
+    state.userAccuracy=accuracy;
+
     dom.meOption.disabled=false;
-    dom.from.value="me";
 
-    drawRoute();
+    /* Si no hay destino, solo muestra el punto GPS */
+    if(dom.to.value){
+      dom.from.value="me";
+    }
 
-    setStatus(`GPS activo · precisión ±${Math.round(pos.coords.accuracy)} m`);
+    drawUserMarker(state.userPos,state.userAccuracy,lat);
+
+    if(dom.to.value){
+      drawRoute();
+    }
+
+    const inside=q.x>=0&&q.x<=CONFIG.width&&q.y>=0&&q.y<=CONFIG.height;
+
+    if(inside){
+      setStatus(`GPS activo · precisión ±${Math.round(accuracy)} m`);
+    }else{
+      setStatus(`GPS activo · precisión ±${Math.round(accuracy)} m · Tu ubicación está fuera del área representada en el plano.`);
+    }
   },err=>{
     const messages={
-      1:"Permiso de ubicación denegado.",
-      2:"No se pudo determinar tu ubicación.",
-      3:"Se agotó el tiempo para obtener tu ubicación."
+      1:"Permiso de ubicación denegado. Revisa los permisos del navegador.",
+      2:"No se pudo determinar tu ubicación. Comprueba que el GPS esté activado.",
+      3:"Se agotó el tiempo para obtener tu ubicación. Intenta nuevamente."
     };
 
     setStatus(messages[err.code]||"No se pudo obtener la ubicación.");
     stopGps();
   },{
     enableHighAccuracy:true,
-    maximumAge:1500,
-    timeout:20000
+    maximumAge:0,
+    timeout:30000
   });
 
   dom.gps.classList.add("on");
   dom.gps.textContent="⏹ Detener GPS";
 }
 
+/* Proyección geográfica con validación */
 function geoToSvg(lat,lng){
   const {NO,SE}=CONFIG.geo;
 
+  const lngSpan=SE.lng-NO.lng;
+  const latSpan=NO.lat-SE.lat;
+
+  if(!lngSpan||!latSpan){
+    return{x:NaN,y:NaN};
+  }
+
   return{
-    x:((lng-NO.lng)/(SE.lng-NO.lng))*CONFIG.width,
-    y:((NO.lat-lat)/(NO.lat-SE.lat))*CONFIG.height
+    x:((lng-NO.lng)/lngSpan)*CONFIG.width,
+    y:((NO.lat-lat)/latSpan)*CONFIG.height
   };
 }
 
@@ -1266,6 +1387,7 @@ function toggleSimulation(){
     }
 
     state.userPos=pos.slice();
+    state.userAccuracy=0;
     dom.meOption.disabled=false;
 
     const remainingPoints=[pos,...pts.slice(index)];
@@ -1284,14 +1406,8 @@ function toggleSimulation(){
       fill:"var(--rd)"
     },dom.pins);
 
-    svgEl("circle",{
-      cx:pos[0],
-      cy:pos[1],
-      r:7,
-      fill:"var(--ac)",
-      stroke:"#fff",
-      "stroke-width":2
-    },dom.pins);
+    /* La simulación utiliza la misma capa independiente del GPS */
+    drawUserMarker(pos,0);
 
     if(index>=pts.length){
       stopSimulation();
@@ -1503,3 +1619,4 @@ drawRoute();
 </script>
 </body>
 </html>
+
